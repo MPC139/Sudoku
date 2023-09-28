@@ -8,52 +8,33 @@ sudoku_1 = [[5, 3, "", "", 7, "", "", "", ""],
           ["", "", "", 4, 1, 9, "", "", 5],
           ["", "", "", "", 8, "", "", 7, 9]]
 
+
 def valid_sudoku(sudoku):
     """Verify if the sudoku is correct."""
-    result_1 = check_size(sudoku)
-    result_2 = check_numbers(sudoku)
-    if result_1 and result_2:
-        result = True
+    if check_size(sudoku) and check_numbers(sudoku):
+        return True
     else:
-        result = False
-    return result
+        return False
 
 
 def check_size(sudoku):
     """Verify if the sudoku is 9x9."""
-    # First let's check if the sudoku has the appropriate number of rows.
-    rows = len(sudoku)
-    if rows == 9:
-        result = True
-    else:
-        result = False
-    # If the rows is correct, we check the columns
-    if result == True:
-        for row in sudoku:
-            items = len(row)
-            if items == 9:
-                result = True
-            else:
-                result = False
-                break
-    return result
+    if len(sudoku)!=9:
+        return False
+    for x in sudoku:
+        if len(x)!=9:
+            return False
+    return True
 
 
 def check_numbers(sudoku):
     """Verify if the sudoku only has integers from 1 to 9."""
-    result = True
+    possibilities = ["",1,2,3,4,5,6,7,8,9]
     for row in sudoku:
         for value in row:
-            if result == True:
-                if value in range(1,10):
-                    result = True
-                elif value == "":
-                    result = True
-                else:
-                    result = False
-            else:
-                break
-    return result
+            if value not in possibilities:
+                return False
+    return True
 
 
 print(valid_sudoku(sudoku_1))

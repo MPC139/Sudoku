@@ -11,7 +11,7 @@ sudoku_1 = [[5, 3, "", "", 7, "", "", "", ""],
 
 def valid_sudoku(sudoku):
     """Verify if the sudoku is correct."""
-    if check_size(sudoku) and check_numbers(sudoku):
+    if check_size(sudoku) and check_numbers(sudoku) and check_repetitions_row(sudoku) and check_repetitions_column(sudoku):
         return True
     else:
         return False
@@ -36,5 +36,31 @@ def check_numbers(sudoku):
                 return False
     return True
 
+def check_repetitions_row(sudoku):
+    """Verify if there are repetitions in the row of the sudoku."""
+    posibilities = list(range(1,10))
+    for row in sudoku:
+        for value in row:
+            if value in posibilities:
+                if row.count(value) != 1:
+                    return False
+    return True
+
+def check_repetitions_column(sudoku):
+    """Verify if there are repititions in the column of the sudoku"""
+    posibilities = list(range(1,10))
+    column = []
+    i = 0
+    while i < 9:
+        for row in sudoku_1:
+            column.append(row[i])
+        for value in column:
+            if value in posibilities:
+                if column.count(value) != 1:
+                    return False
+        column = []
+        i += 1
+    return True
 
 print(valid_sudoku(sudoku_1))
+
